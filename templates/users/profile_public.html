@@ -1,0 +1,86 @@
+{% extends 'baseProf.html' %}
+{% block title %} {{customUser.get_username}}{% endblock title %}
+
+{% block prof %}
+
+{% comment "" %}{% if user.is_authenticated %}{% endcomment %}
+
+  <div class='cont_4_priAccessPr_main'>
+    <div class="">
+      <div class="text_for_index border_4_priAccess_all" style="background-color: #fff;">
+        <div class="config_top_main_flex_param">
+          <div style="display: flex;">
+
+            <img class='config_img_4_priAccessPr text_for_index' src="{{ customUser.photoUser.url }}" alt="{{ customUser.username}}">
+
+            <div>
+              <h3 style="margin-top: 3%;">{{customUser.username}}</h3>
+              <p>unique name: {{customUser.uniqueNameCustomUsers}}</p>
+            </div>
+
+          </div>
+          <div>
+            <p>counter:{{ view }}</p>
+            <p>dislike/like:</p>
+            <p>subscribers: </p>
+            <p>rating:</p>
+          </div>
+          <div> 
+            <p class="text_4_priAccessPr_top">Date joined: {{customUser.date_joined}}</p>
+            <p class="text_4_priAccessPr_top">id: #{{customUser.id}}</p>
+                        {% if user.is_authenticated %} <form action="" method="post">{% csrf_token %}<p>{{ form.members }}</p><input type="submit" value="написать сообщение"></form>{% else %}<p>LOL</p>{% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="cont_4_priAccessPr_main_2">
+        <div class='disp_flex_param'>
+          <div  class='cont_4_priAccessPr_about'>
+            <div class="border_4_priAccess_all" style="background-color: #fff;">
+              <p class="text_for_index">About user</p>
+              <p class="text_for_index">{{customUser.aboutUser}}</p>
+              <hr style="color: gainsboro;">
+              <div class="text_for_index">
+                <p>Youre group</p>
+                <p>None</p>
+              </div>
+              <hr style="color: gainsboro;">
+              <div class="text_for_index">
+                <p>Youre achivment</p>
+                <p>None</p>
+              </div>
+          </div>
+          </div>
+
+          <div class="cont_4_priAccessPr_right">
+          <div class="text_for_index border_4_priAccess_all" style="background-color: #fff;">
+
+            <p>Article <a class="text_for_url" href="{% url 'users:all_article'%}">all</a> ({{ userArticle.count }})</p>
+            {% for art in userArticle %}
+              <p><a class='text_for_url' href='{{art.get_absolute_url}}'>заголовок: {{art.titleArticle}}</a> <br>{{art.textArticle}}({{ art.viewArticle.all.count }})</p>
+
+            {% endfor %}
+            <br>
+
+            <p>Comment <a class="text_for_url" href="{% url 'users:all_comment'%}">all</a> ({{ userComment.count }})</p>
+            {% for com in userComment %}       
+              </p>{{com.TextComment}};<br> к записи: <a class='text_for_url' href='{{com.ArticleAttcahmentComment.get_absolute_url}}'>{{com.ArticleAttcahmentComment}}</a></p>
+            {% endfor %}
+
+          </div>
+          </div>
+
+
+        </div>
+    </div>
+
+  </div>
+{% comment "" %}
+{% else %}
+  <p>Вас недолжно быть здесь<a href="{% url 'login'%}?next={{request.path}}">Login</a></p>
+{% endif %}
+{% endcomment %}
+{% endblock prof %}

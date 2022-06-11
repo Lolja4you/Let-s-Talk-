@@ -1,0 +1,104 @@
+{% extends 'baseArticle.html' %}
+
+{% block title %}
+    {{article}}
+{% endblock title %}
+
+{% block art %}
+<div style="margin-top: 75px;" class='container_for_educations'>
+    <div class='header_inner_border'>
+        <div class="flex_param_index">
+            <div class='text_for_index'>
+
+                {% if user.is_authenticated and user == article.authorArticle %}
+                    <p>user: <a style='color:#9f2a82; text-decoration: none;' href="{% url 'users:profile'%}">{{article.authorArticle}}</a>; Date: {{article.dateCreateArticle}}</p>
+                {% else %}
+                    <p>user: <a class='text_for_url' href="{% url 'users:prof' article.authorArticle.id %}">{{article.authorArticle}}</a>; Date: {{article.dateCreateArticle}}</p>
+                {% endif %}
+                <p>
+                    <em>Теги: {% for tag in article.tagsArticle.all %}
+                    {{tag}};
+                    {% endfor %}</em>
+                    views: {{ article.viewArticle.count}}
+                </p>
+                <hr style="max-width: 100%; min-width: 100%; color: aliceblue;">
+                <div style="overflow: hidden;">
+                    <h3>{{article}}</h3><br>
+                    <p>{{article.textArticle}}</p>
+
+
+                    {% if user.is_authenticated and user == article.authorArticle %}
+                            <a class='text_for_url' href="{% url 'article:change_art' article.id%}">change</a><br>
+                            <a class='text_for_url' href="{% url 'article:delete_art' article.id%}">delete</a>
+                    {% endif %}
+                    <hr style="max-width: 100%; min-width: 100%; color: aliceblue;">
+                    <p>
+                    </p>
+
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'article:like_art' article.id %}" method='post'>
+                            {% csrf_token %}
+                            <button>like</button>
+                        </form>
+                        <form action="{% url 'article:dislike_art' article.id %}" method='post'>
+                            {% csrf_token %}
+                            <button>dislike</button>
+                        </form>
+                    {% else %}
+                        <p></p>
+                    {% endif %}
+                </div>
+
+            </div>  
+        </div>
+    </div>
+</div>
+
+            {% if user.is_authenticated %}
+            <form action="" method="post">
+            <div class='container_for_educations'>
+                    <div class='text_for_index'>
+                        {% csrf_token %}
+                        <p>{{ form.TextComment }}</p>
+                        <input type="submit" value="Прокомментировать запись">
+                    </div>
+                </div>
+            </div>
+            </form>
+            {% else %}
+            <div class='container_for_educations'>
+                <ul>Войдите, чтобы оставлять комментарии: <a class='text_for_url' href="{% url 'login'%}?next={{request.path}}">Login</a></ul>
+            </div>
+            {% endif %}
+
+<div class='container_for_educations'>
+                {% if comment %}
+                {% for comments in comment %}
+                        <div class="header_inner_border">
+                            <div class="flex_param_index">
+                                <div class='text_for_index'>
+                    {% if user.is_authenticated and user == comments.AuthorComment %}
+                        <p>Автор:<a style='color:#9f2a82; text-decoration: none;' href="{% url 'users:profile'%}">{{comments.AuthorComment}}</a>; дата: <em style="color: gray;">{{comments.DateComment}}</em></p>
+                        <form action='article/edit_comment/delete/{{comment.ArticleAttcahmentComment.slugArticle}}/{{comment.id}}'>
+                            {% csrf_token %}
+                            <button>delete</button>
+                        </form>
+                    {% else %}
+                        <p>Автор:<a class='text_for_url' href="{% url 'users:prof' comments.AuthorComment.slugCustomUser %}">{{comments.AuthorComment}}</a>; дата: <em style="color: gray;">{{comments.DateComment}}</em></p>
+                    {% endif %}
+                    <p>{{comments}}</p>
+
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+                {% else %}
+                    <p>никто пока что не комментировал эту новость</p>
+                {% endif %}
+
+
+</div>
+            
+
+{% endblock art %}

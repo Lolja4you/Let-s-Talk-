@@ -1,0 +1,30 @@
+{% extends 'baseProf.html' %}
+
+{% block title %}All comment{% endblock title %}
+
+
+{% block prof %}
+{% if allUserComment %}
+    <div style='margin-top: 120px;'>
+    {% for com in allUserComment %}
+        <div class='container_for_educations'>
+            <div class='header_inner_border'>
+                <div class="flex_param_index">
+                <div class='text_for_index'>
+
+                    <p>Text: {{com}}; к записи: <a class='text_for_url' href='{{com.ArticleAttcahmentComment.get_absolute_url}}'>{{com.ArticleAttcahmentComment}}</a></p>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+{% else %}
+    <div class='container_for_educations' style='margin-top: 120px;'>
+    <div class='header_inner_border'>
+        <p class='text_for_index'>Ничего не найдено</p>
+    </div>
+    </div>
+{% endif %}
+{% endblock prof %}

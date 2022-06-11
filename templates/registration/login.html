@@ -1,0 +1,40 @@
+{% extends 'baseLog.html' %}
+
+{% block log %}
+
+    <h2 style="font-family:'Courier New', Courier, monospace;">Login on Let's Talk?</h2>
+    <div class="text_for_index">
+      {% if form.errors %}
+        <p style="color: coral;">Ошибка. Вы ввели неверные данные авторизации</p>
+      {% endif %}
+
+      {% if next %}
+        {% if user.is_authenticated %}
+          <p>У вашей учетной записи нет доступа к этой странице. Чтобы продолжить, войдите в систему с учетной записью, у которой есть доступ.</p>
+        {% else %}
+          <p>Пожалуйста, войдите, чтобы увидеть эту страницу.</p>
+        {% endif %}
+      {% endif %}
+
+      <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+
+        {{ form.username.label_tag }}
+        <p>{{ form.username }}</p>
+
+        {{ form.password.label_tag }}
+        <p>{{ form.password }}</p>
+
+
+      <input style="width: 30%;" background-color='white' type="submit" value="login">
+      <input type="hidden" name="next" value="{{ next }}">
+      </form>
+
+      {# Assumes you setup the password_reset view in your URLconf #}
+      <br>
+      <p><a class="text_for_url" href="{% url 'password_reset' %}">Lost password?</a></p>
+    </div>
+
+
+
+{% endblock log %}

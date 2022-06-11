@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block base %}
+  <header class="header_for_nav">
+    <div class='container_for_nav'>
+        <div class="inner_for_nav">
+         
+          <a class='logo_for_nav' href=''>Let's talk?</a>
+
+          <nav class='nav'>
+
+              <a class='nav_link' href="{% url 'article:base' %}">лента</a>
+
+            {% if user.is_authenticated %}
+              <a class='nav_link' href="{% url 'ch_sys:ch' %}">Чаты</a>              
+              <a class='nav_link' href="{% url 'users:profile' %}">
+                {%comment%}<img class='cont_for_user_avatar_cirle' src="{{user.photoUser.url}}">{% endcomment %}
+                User:{{ user.get_username }}
+              </a>
+              <a class='nav_link' href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+              
+            {% else %}
+              <a class='nav_link' href="{% url 'login'%}?next={{request.path}}">Login</a>
+            {% endif %}
+          </nav>
+
+        </div>
+      </div>
+    </div>
+
+  </header>
+   {% block prart %}{% endblock prart %}
+
+{% endblock base %}

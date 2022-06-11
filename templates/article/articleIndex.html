@@ -1,0 +1,74 @@
+{% extends 'baseArticle.html' %}
+
+{% block title %}
+    Записи
+{% endblock title %}
+
+{% block art %}
+    <div style='width: 100%;max-width: 40%;margin: 0 auto; padding-top: 75px;'>
+        {% if user.is_authenticated %}
+        <div class="container_for_created">
+            <div class="colors_created">
+                <div style="padding-left: 1.75%;">
+                    <div style="display: flex; justify-content: space-between;">
+                <a  class='text_for_url' style="margin-top: 16px;" href="{% url 'article:create' %}">Создать(create)</a><p style="color: gray; padding-right: 1.75%;">Создать новость</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if article %}
+        {% for art in article %}
+        
+        <div class='container_for_educations'>
+            <div class='header_inner_border'>
+                <div class="flex_param_index">
+                <div class='text_for_index'>
+                    {% if user.is_authenticated and user == art.authorArticle %}
+                        <p>user: <a href="{% url 'users:profile' %}" class='text_for_url' style='color:#9f2a82;'>{{art.authorArticle}}</a>; Date: {{art.dateCreateArticle}}</p>
+                    {% else %}
+                        <p>
+                            user:
+                            <a class='text_for_url' href="{% url 'users:prof' art.authorArticle.id%}">
+                                {{art.authorArticle}}
+                            </a>;
+                            Date: {{art.dateCreateArticle}}
+                        </p>
+                    {% endif %}
+                    <p>
+                        <em>Теги: {% for tag in art.tagsArticle.all %}
+                            <a class='text_for_url' href='{{tag.get_absolute_url}}'>{{tag}};</a>
+                        {% endfor %}
+                        </em>
+                        views: {{ art.viewArticle.all.count }}
+                    </p>
+                    <hr style="max-width: 100%; min-width: 100%; color: aliceblue;">
+                    <h2><a class='text_for_url' href='{{art.get_absolute_url}}'>{{art}}</a></h2><br>
+                    
+                    <div style="overflow: hidden;">
+                        <p>{{art.textArticle}}</p>
+
+
+                        
+
+
+                    </div>  
+                
+                </div>
+                </div>
+            </div>
+        </div>
+            
+        
+            
+        {% endfor %}
+    {% else %}
+        <p>нема</p>
+    {% endif %}
+    
+    
+
+
+{% endblock art %}

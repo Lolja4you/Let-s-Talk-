@@ -1,0 +1,39 @@
+{% extends 'baseArticle.html' %}
+
+{% block title %}
+    {{tag}}
+{% endblock title %}
+
+{% block art %}
+    <h2 style='margin-top: 25px;' class='container_for_educations'>searh with:{{tag}}</h2>
+    {% if rev %}
+        {% for art in rev %}
+            <div class='container_for_educations'>
+                <div class='header_inner_border'>
+                    <div class="flex_param_index">
+                    <div class='text_for_index'>
+                        <p>user: {{art.authorArticle}}; Date: {{art.dateCreateArticle}}</p>
+                        <h2><a class='text_for_url' href='{{art.get_absolute_url}}'>{{art}}</a></h2>
+                        
+                        <div style="overflow: hidden;">
+                            <p>{{art.textArticle}}</p>
+                            
+                            <em>Теги: {% for tag in art.tagsArticle.all %}
+                                <a class='text_for_url' href='{{tag.get_absolute_url}}'>{{tag}};</a>
+                            {% endfor %}
+                            </em>
+                            
+                            <p>{{art.slugArticle}}; views: {{ art.viewArticle.all.count }}</p>
+                        </div>  
+                    
+                    </div>
+                    </div>
+                </div>
+            </div>   
+        {% endfor %}
+    {% else %}
+        none
+    {% endif %}
+
+
+{% endblock art %}

@@ -1,0 +1,27 @@
+{% extends 'baseArticle.html' %}
+
+{% block title %}
+    comments
+{% endblock title %}
+
+{% block art %}
+<div style="margin-top: 75px;" class='container_for_educations'>
+    <h2>Comments</h2>
+    <div class='header_inner_border'>
+        <div class="flex_param_index">
+            <div class='text_for_index'>
+                {% if comment %}
+                    {% for comments in comment %}
+                        {% if user.is_authenticated and user == comments.AuthorComment %}
+                            <p><a style='color:#9f2a82; text-decoration: none;' href="{% url 'users:prof' comments.AuthorComment.slugCustomUser %}">{{comments.AuthorComment}}</a> <em style='color: gray'>{{comments.DateComment}}</em></p>
+                        {% else %}
+                            <a class='text_for_url' href="{% url 'users:prof' comments.AuthorComment.slugCustomUser %}">{{comments.AuthorComment}}</a>
+                        {% endif %}
+                        <p>{{comments.TextComment}}</p>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>None</p>
+                {% endif %}
+
+{% endblock art %}

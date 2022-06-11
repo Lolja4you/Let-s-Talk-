@@ -1,0 +1,51 @@
+{% extends 'baseArticle.html' %}
+
+{% block title %}
+    talk^)
+{% endblock title %}
+
+{% block art %}
+<div style="margin-top: 75px;" class='container_for_educations'>
+
+            {% if user.is_authenticated %}
+            <form action="" method="post">
+            <div class='container_for_educations'>
+                    <div class='text_for_index'>
+                        {% csrf_token %}
+                        <p>{{ form.type }}</p>
+                        <p>{{ form.members }}</p>
+                        <input type="submit" value="создать чат">
+                    </div>
+                </div>
+            </div>
+            </form>
+            {% else %}
+            <div class='container_for_educations'>
+                <ul>Войдите, чтобы оставлять комментарии: <a class='text_for_url' href="{% url 'login'%}?next={{request.path}}">Login</a></ul>
+            </div>
+            {% endif %}
+</div>            
+<div style="margin-top: 75px;" class='container_for_educations'>
+    {% if chat %}
+        {% for chats in chat %}
+            <div class="header_inner_border">
+                <div class="flex_param_index">
+                    <div class='text_for_index'>
+                        <a class='text_for_url' href="{% url 'ch_sys:di' chats.id %}">{{lists}}
+                            <p>{{chats}}</p>
+                        
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+        {% endfor %}
+    {% else %}
+                <div class="header_inner_border">
+                <div class="flex_param_index">
+                    <div class='text_for_index'>
+        <p>None</p>
+    </div></div></div>
+    {% endif %}
+</div>
+{% endblock art %}

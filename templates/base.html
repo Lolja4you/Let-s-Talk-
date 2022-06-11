@@ -1,0 +1,31 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>let's talk? -{% block title %}{% endblock title %}</title>
+    
+  </head>
+  <body>
+  <main class='main'>
+    {% block base %}
+    {% endblock base %}
+  </main>
+
+  <footer>
+    <div class='container_for_footer'>
+      <div class="inner_for_footer">
+        <a class='logo_for_nav' style="margin: 15px;" href="">let's Talk?</a>
+        <button id='default' alt="стандартная тема" title="стандартная тема" style="background: #2d1e2f;border-color: #2d1e2f;color: whitesmoke;">стандартная тема</button>
+        <button id="black" alt="светлая тема" title="темная тема" style="background: #2d1e2f;border-color: #2d1e2f;color: whitesmoke;">темная тема</button>
+        <a class='logo_for_nav' style="font-size: 16px; margin: 15px;">made by meloch</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src='/static/css/color_themes.js'></script>
+  </body>
+</html>

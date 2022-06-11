@@ -1,0 +1,39 @@
+{% extends 'baseProf.html' %}
+
+{% block title %}All article{% endblock title %}
+
+
+{% block prof %}
+
+
+
+
+{% if allUserArticle %}
+    <div style='margin-top: 120px;'>
+    {% for art in allUserArticle %}
+        <div class='container_for_educations'>
+            <div class='header_inner_border'>
+                <div class="flex_param_index">
+                <div class='text_for_index'>
+                            <p>Text: {{art.textArticle}}</p>
+                            <a class='text_for_url' href='{{art.get_absolute_url}}'><p>Title: {{art.titleArticle}}</p></a>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+{% else %}
+
+            <div class='container_for_educations' style='margin-top: 120px;'>
+            <div class='header_inner_border'>
+                <p class='text_for_index'>Ничего не найдено</p>
+            </div>
+            </div>
+
+{% endif %}
+
+
+
+{% endblock prof %}
